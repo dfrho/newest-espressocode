@@ -1,0 +1,74 @@
+---
+title: The Nullish Coalescing Operator
+date: '2020-05-29'
+summary: 'the answer to double bang'
+tags: [learning, javascript]
+---
+
+![nullish](/static/images/jon-tyson-unsplash.jpg)
+
+You've been meaning to catch up on the latest Javascript, right? Here's one: the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator">Nullish Coalescing Operator</a>, which MDN describes this way:
+
+> The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its
+> left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.
+
+Think of it as the logical OR operator, <b>||</b>, with looser standards. Meaning the nullish coalescing operator only passes over the left hand value if it is **nullish**, that's **nullL** or **undefined**. The <b>OR</b> operator skips over the left-hand side whenever it's **falsey**, and that includes zero, NAN and empty strings in addition to **nullish** values and false.
+
+Some obvious test cases first, all you can try in the MDN sandbox linked above. Included are comparisons to the same expression with an OR operator to help draw the distinction.
+
+![Nullish coalescing operator examples](/static/images/code.png)
+
+<h4>Assigning Default Values</h4>
+As illustrated above, the first and probably most common use case for the nullish coalescing operator
+is <b>assigning default values to a variable</b>. The pattern goes like this: If nothing specific
+(nullish) is available on the left, apply the generic on the right.
+
+<h4>Short-Circuiting</h4>
+<p>
+  Another great use case is <b>short-circuit expressions</b>: Moving across an equation from left to
+  right, if an expression is valid, ie. not nullish, its value is applied. Otherwise the right-hand
+  expression is evaluated and returned. Basically if the first expression "works", use it, otherwise
+  use the fall-back expression. Also kind of a default pattern, but this time using expressions
+  instead of assigned values and the focus being on the first expression, or "short" circuit.
+</p>
+
+<p>
+  Below is a problem/solution test to see if you can figure out what logs, given what you now know
+  about the nullish coalescing operator and the short-circuit pattern. It's based on what's already
+  in MDN but without giving away the answers at first glance:
+</p>
+
+![Short Circuiting Problems](/static/images/shortcircuitcode1.png)
+
+Had some time to think? And now the solutions as they would appear in your bash prompt:
+
+```bash
+console.log(A() ?? C())
+A was called
+C was called
+foo
+```
+
+SOLUTION: Both expressions are evaluated because the left side returns undefined -- nullish -- then moves on to the right side and evaluates it. Not a short circuit in this scenario, but works as expected.
+
+```bash
+console.log(B() ?? C())
+B was called
+false
+```
+
+SOLUTION: B() returns false, and not nullish, so the right side is not evaluated as the expression "coalesces" on the left side. Short circuit complete.
+
+<p>
+  How did you do? If you got lost, just try out a few scenarios of your own in the MDN repl
+  playground.
+</p>
+
+<h4>No Chaining With Logical AND or OR Operators</h4>
+One more rule, got that JS people? It may sound logically tempting to do a seemingly-elegant one-liner
+but mixing the nullish coalescing with logical AND or OR operators will result in a syntax error. So
+nothing like this:
+
+![Short Circuiting Solutions](/static/images/code3.png)
+
+Hopefully that provides a good working knowledge of the nullish coalescing operator. Next question -- If 'double bang' is short for two exclamation points in coding, what is the slang term for two question marks? Just wondering...

@@ -18,7 +18,7 @@ const projectsData = [
     href: 'https://github.com/dfrho/zerogrand',
   },
   {
-    title: 'AutoZone',
+    title: 'AutoZone.com',
     description: 'a mobile-first e-commerce app',
     imgSrc: '/static/images/autozone.png',
     href: 'https://autozone.com',
