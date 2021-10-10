@@ -24,14 +24,14 @@ const NewsletterForm = ({ title = 'Subscribe to the newsletter' }) => {
     const { error } = await res.json()
     if (error) {
       setError(true)
-      setMessage('Your e-mail adress is invalid or you are already subscribed!')
+      setMessage('Your e-mail address is invalid or you are already subscribed!')
       return
     }
 
     inputEl.current.value = ''
     setError(false)
     setSubscribed(true)
-    setMessage('Successfully! 🎉 You are now subscribed.')
+    setMessage('Success! 🎉 You are now subscribed.')
   }
 
   return (

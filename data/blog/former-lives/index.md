@@ -1,0 +1,27 @@
+---
+title: Notes for Sales Tech Execs Becoming Software Engineers
+date: '2020-05-23'
+description: "Here's to engineers having former lives"
+tags: [career, engineering]
+---
+
+![passion](/static/images/ian-schneider-unsplash.jpg)
+
+It's delightful news to some hiring managers, and just doesn't compute for others. Career changers are still thought of as unicorns in software engineering, and for good reason. There is no shortage of young, cheap, labor coming out of college engineering programs, and there's a glut of talent in general, especially post Covid-19. I'm grateful in my career to work for people who get the value of my former careers and what they bring to the table.
+
+My route wasn't linear at all, and what is after all? Teaching myself how to automate usage reports in Python and R for my software sales efforts got me hooked. I thought the next stop was programmatic media sales, where algorithms buy and sell the commercials you see and hear, but the company I moved to didn't really have working software to sell as it turned out. Bootcamp became a clear choice as I identified more and more with engineering and now wanted the ability to build my own projects and understand others' code.
+
+But how do you transfer skills to a new career? If you're pivoting from sales to engineering, definitely read on. Even if you're just changing careers, you'll need to find a way to underline the value of what you used to do as it relates to what you'll be doing. Remember, you're not starting from zero like many grads.
+
+For example, the most transferrable skill from tech sales, communication -- speaking and writing to groups and individuals about code in a concise, empathetic manner -- is generally in short supply and high demand among engineers. Great example: I once worked with a former brewery sales exec who is now a coding project manager; She's now powerfully and uniquely effective among her peers. Her manager appreciates her background, but it's probably scary on a resume to some.
+
+Another thing that comes with sales expertise is big picture thinking:
+
+> Where is the organization going and how do the pieces fit together to bring a succesful product to market?
+> What does the user experience mean to what I'm doing right now?
+
+Big picture thinking is especially useful in dealing with architecture, whiteboarding, product management, and generating prototypes.
+
+Other routes to consider are **sales engineering** and **success engineering**, where sales expertise becomes especially useful in generating POCs, demoing software, and installing software/integrating APIs with direct client contact.
+
+With or without a sales background, former lives bring valuable, diverse skill sets to any team. I say embrace the opportunity to hire a career changer -- they can be some of your brightest team members, especially if they used to sell for a living.

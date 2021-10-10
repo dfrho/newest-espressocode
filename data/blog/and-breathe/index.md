@@ -1,0 +1,106 @@
+---
+title: Making Background Images "Breathe"
+date: '2021-10-09'
+summary: 'How to get your background images to scale in and out -- in effect, breathe'
+tags: [learning, engineering]
+draft: false
+---
+
+<p>Making background images animate to scale up and down, in effect 'breathe' is an elegant, eye-catching technique to add to any site or landing page. For the full effect of what I mean by 'breathe', check out the image below.</p>
+
+![codesandbox](/static/images/codesandbox-record.gif)
+
+<p>Here's how to do it.</p>
+
+<h3>First, Structure the JSX in your Component.js</h3>
+    
+<p>Note the use of the class name 'pseudo-child' to describe what will in the end appear to be a child, but is actually a sibling, of the background div. The pseudo-child must be a sibling of the background div to avoid the animation effect. And it must be housed in a container in order to float and center it over the background animation with flexbox and z-index settings.</p>
+
+```JSX
+import "./styles.css";
+
+export default function App() {
+  return (
+    <div className="App">
+      <div className="background"></div>
+      <div className="pseudo-child-container">
+        <h2 className="pseudo-child">Breathe</h2>
+      </div>
+    </div>
+  );
+};
+```
+
+<h3>Set the Background Image</h3>
+<p>
+    In your <b>styles.css</b> file, apply background image styling to the background div.
+</p>
+
+```css
+.background {
+  background-image: url(https://res.cloudinary.com/dm89xfnl4/image/upload/v1633802207/erol-ahmed-aIYFR0vbADk-unsplash_r6nmc8.jpg);
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+```
+
+<h3>Apply Breathe Animation to Background</h3>
+<p>
+    Create the <b>breathe</b> keyframes with a subtle transform of scale back and forth by a barely-noticeable percentage. Apply <b>breathe</b> to the background class's animation property.
+</p>
+
+```css
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.04);
+  }
+}
+
+.background {
+  background-image: url(https://res.cloudinary.com/dm89xfnl4/image/upload/v1633802207/erol-ahmed-aIYFR0vbADk-unsplash_r6nmc8.jpg);
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: breathe infinite alternate ease-in-out 8s;
+}
+```
+
+<h3>Apply Pseudo-Child and Container Styling</h3>
+<p>
+    Note the use of z-index and flexbox.
+</p>
+
+```css
+.pseudo-child-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.pseudo-child {
+  z-index: 10;
+  color: white;
+  font-family: 'Montserrat', Impact, sans-serif;
+  font-size: 54px;
+}
+```
+
+<h3>The End Result</h3>
+<p>
+    The result is a subtle but dramatic effect you can use with any headline. Play with different images, or experiment with containing the image/pseudo-child combo to a card div on the page instead of the full page background, perhaps as a preview image for a blog post in a table of contents. Below is the full working example in a CodeSandbox.
+</p>
+
+[![Edit youthful-snyder-74ox9](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/youthful-snyder-74ox9?fontsize=14&hidenavigation=1&theme=dark)
