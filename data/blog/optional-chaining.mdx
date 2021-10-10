@@ -1,0 +1,33 @@
+---
+title: Optional Chaining in Javascript
+date: '2020-05-25'
+summary: 'the latest Javascript shorthand'
+tags: [learning, javascript]
+---
+
+![chaining](/static/images/miltiadis-fragkidis-unsplash.jpg)
+
+Looking to learn about or brush up on the optional chaining operator? Here are three things I learned while checking in with MDN and trying out a few test cases on their detail page for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">Optional Chaining</a>, which shows:
+
+> The optional chaining operator <b>?.</b> permits reading the value of a property located deep within a chain of connected objects without
+> having to expressly validate that each reference in the chain is valid.
+
+The first most obvious thing about the <b>?.</b> optional chaining operator is that <i>it replaces the <b>&&</b> operator when checking for a series of nested objects</i>. One can make that mental leap easily because it's a pattern we've all used and now has a shorter syntax available. We'll take a look at nested objects several different ways within one parent object, <b>adventurer</b>. Here's how to use the operator with simple nested objects, which you can try out in MDN's Javascript sandbox:
+
+![Optional Chaining with Nested Properties](/static/images/chaining-code.png)
+
+<i>
+  Second, it's not just for strict objects, as an Object can also be a function or an array, nested
+  within another object
+</i>
+. Here we apply optional chaining to a nested method and nested array within the <b>adventurer</b> object.:
+
+![Optional Chaining with Nested Methods](/static/images/chaining-code2.png)
+
+Third, <i>it returns <b>undefined</b> when tested values are <b>nullish</b>, which is <b>null</b> or <b>undefined</b></i>, as you can see in all three test cases below where we try it with a property that doesn't exist.
+
+![Optional Chaining with Nested Arrays](/static/images/chaining-code3.png)
+
+That's three things you need to know about the new Javascript Optional Chaining. While not accepted by the IE browser yet (shocking, I know) if you're working in React you're transpiling anyway. Try to keep them in mind when slinging your optional chains and you'll be an expert in no time.
+
+Next up? The <i>Nullish Coalescing Operator</i>.

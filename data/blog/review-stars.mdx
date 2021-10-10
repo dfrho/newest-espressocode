@@ -1,0 +1,184 @@
+---
+title: New Review Stars
+date: '2019-09-15'
+summary: 'Building the UI for Average Product User Rating'
+tags: [learning, UI, javascript, react, engineering]
+---
+
+![stars](/static/images/taylor-leopold-unsplash.jpg)
+
+So you're implementing a review stars feature on your Product Detail Page or Product Listing Page,
+and provided a two decimal-placed user rating for stars one through five, it's your job to
+architect and code the design. This is a deep-dive on how I did it using React, hooks, and styled
+components.
+
+What's great about a task like this is it's hardly reinventing the wheel. Leading e-commerce sites
+like <b>Amazon</b>, <b>Home Depot</b>, and <b>Best Buy</b> have invested probably more than anyone
+in A/B testing to know what drives revenue and click-through, and many e-commerce sites end up
+outsourcing with third party vendors like
+[BazaarVoice](https://www.bazaarvoice.com/ratings-and-reviews/) for reviews, so it's useful to
+start with a quick look at how those engineering teams approached the same task. If you're
+building an MVP that includes a home-grown review solution, your product owner will certainly
+appreciate your due diligence come QA and demo time, as long as you discuss the differences and
+how to apply them to your user story and retail category.
+
+Let's start with the 800-lb gorilla of retail, <b>Amazon</b>. Their UI designers have chosen to
+shortcut the rendering of partial review star fills at more humanly-recognizable stops. It appears
+any rating between x.2 and x.7 defaults to a slanted 50% partial star fill, signaling the user
+that it's a partial rating toward the lower half. Upon further walk-through of the product pages,
+any partial rating between x.0 and x.2 shows an empty star, and any rating between x.8 and x.99
+renders a 'partial' star, in quotes here because it's filled 100%.
+
+![Amazon's Review Stars](/static/images/amazon_reviews.png)
+
+{' '}
+
+<b>Best Buy</b> not only goes full on exact partial star but adds a thin red line as its edge to make
+it crystal clear, just like the picture and sound quality you expect as a bluetooth noise-cancelling
+headphones user.
+
+![Best Buy's Super-Detailed Review Stars](/static/images/bestbuy_reviewstars.png)
+
+And <b>Home Depot</b> has also decided their customers respond better to full-on partially
+rendered stars to signify the fractional rating. I'm guesssing their users are also more precise
+and demanding, many being contractors.
+
+![Home Depot Review Stars - Our Target Approach](/static/images/homedepot_reviews.png)
+
+We're going with the Home Depot approach of fully-partialized stars (no edges) and will assume for
+brevity you're familiar with React and building basic applications that consume an API or data
+store.
+
+First let's revisit <i>Thinking in React</i> from the React docs. Using the component parent/child
+logic we can sketch out the component tree required for rendering review stars. There's obviously
+the <i>Review Stars Container</i>, which holds the <i>Stars</i> and <i>NumericRating</i>. Then
+Stars is comprised of three separate components consisting of one to multiple stars: First, the
+_FilledStars_ represent the baseline rating. If the average rating is 3.4, then there would be three _FilledStars_. The <i>PartialStar</i> is the crux of our work, because it represents the partial rating of 0.4, and
+is filled presumably 40% to reflect that. Then <i>EmptyStars</i> represent any whole numbers from the
+difference between max rating (generally five), and the actual rating, 3.5. In this case, there would
+be one <i>EmptyStar</i>.
+
+![Thinking in React about Review Stars](/static/images/review_stars_diagram.png)
+
+So, "Thinking in React", I think we should scaffold out the project like below. You'll notice a
+hook for getting one random product from the mock json file -- more on those in a bit.
+
+![Scaffold](/static/images/scaffold.png)
+
+In the <i><b>AppStyles.js</b></i> file, add the following styled components to style out the basic PDP. I'm a big fan of styled components
+and its syntax being easily refactored to-and-from CSS. Plus its declarative naming syntax and reusability
+of elements is super useful for mapping our "React thinking" component names and styles onto actual JSX
+elements.
+
+```JSX
+import styled from 'styled-components';
+
+export const ProductCard = styled.div`
+	text-align: left;
+	min-height: 80vh;
+	background-color: #282c34;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 5rem;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+`;
+
+export const ProductImage = styled.img`
+	display: flex;
+	align-content: flex-start;
+`;
+```
+
+So the most important code is in <i><b>reviewStars/styles.js</b></i>, where we contain and handle the overflow for building the partial star, leveraging
+
+<i>position: absolute</i> while dynamically setting width according to the partial rating percentage,
+thanks to styled components' very handy capability of handling props.
+
+```JSX
+import styled from 'styled-components';
+import palette from '../../constants/palette';
+
+export const PartialStarContainer = styled.div`
+	margin: auto 0;
+	position: relative;
+	display: inline-block;
+	padding: 0;
+`;
+
+export const PartialStar = styled.div`
+	color: ${palette.teal};
+	padding: 0;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	width: ${props => props.percent || '0%'};
+`;
+```
+
+In <i>PartialStar</i> you can see how we are locking its postion to the top left with overflow
+hidden, and it's set with to <i>props.percent</i>. Oh yeah, that's another cool thing about styled
+components! The ability to apply props for dynamic styling, as with a partial rating percentage.
+
+```JSX
+export const Star = styled.div`
+	color: ${palette.teal};
+	padding: 0;
+	z-index: 0;
+`;
+
+export const Rating = styled.div`
+	margin: auto;
+	color: ${palette.gray2};
+	font-size: 1.4rem;
+`;
+
+export const Stars = styled.div`
+	margin: auto;
+	font-size: 1.4rem;
+`;
+
+export const ReviewWrapper = styled.div`
+	min-height: 3rem;
+	display: flex;
+	align-content: center;
+	justify-content: space-around;
+	margin-left: 0.8rem;
+`;
+```
+
+Now we need some mock data to consume, ideally a listing of products with images, reviews, and
+maybe a lorem ipsum description. You can use [this gist](https://gist.github.com/dfrho/a70357df638a968a6fef9e27119bf350) I've created, along with
+[this hook](https://gist.github.com/dfrho/15cc3a8bf9b38c1e31d21b92c98294e5) which randomizes the
+product loaded, also in the starter project. Then we pull it all together in our<i><b>ReviewStar.js</b></i> render method:
+
+```JSX
+<React.Fragment>
+  <figure style={{ display: 'flex' }}>
+    {fullStars.map(star => star)}
+    {hasPartialStar && (
+      <PartialStarContainer>
+        <PartialStar percent={ratingPercent(rating % 1, 1)}>★</PartialStar>
+        <Star>☆</Star>
+      </PartialStarContainer>
+    )}
+    {emptyStars.length > 0 && emptyStars.map(star => star)}
+  </figure>
+</React.Fragment>
+```
+
+Other than that, there is some mild math for determining how many empty, if any, stars there are,
+and extracting the partial percentage rating.
+
+So in the final example, the PDP is only consuming one average review rating for brevity (normally
+you'd see a list of reviews comprising the average). Here's the final result as rendered; For
+added challenge my next step would be connecting to a mock API for a list of product with multiple
+reviews (or just mock it up in JSON data), to calculate and render an actual average of review
+ratings, then adapting my hook to calculate said average. If you have ideas or feedback, I'm on
+twitter at the link in my About section.
+
+![Final Review Stars Rendering](/static/images/rendered.png)
