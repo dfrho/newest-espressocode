@@ -23,6 +23,12 @@ const projectsData = [
     imgSrc: '/static/images/autozone.png',
     href: 'https://autozone.com',
   },
+  {
+    title: 'Flagship',
+    description: 'a React Native monorepo for building your best mobiile shopping app',
+    imgSrc: '/static/images/flagship_hor.png',
+    href: 'https://github.com/brandingbrand/flagship',
+  },
 ]
 
 export default projectsData
