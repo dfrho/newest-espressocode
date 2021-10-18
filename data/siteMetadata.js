@@ -4,7 +4,7 @@ const siteMetadata = {
   headerTitle: 'EspressoCode',
   description: 'Full-flavored, succinct commentary on the coding life',
   language: 'en-us',
-  siteUrl: 'https://espressocode.tech',
+  siteUrl: 'https://www.espressocode.tech',
   siteRepo: 'https://github.com/dfrho/newest-espressocode',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.jpg',
