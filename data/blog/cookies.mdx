@@ -227,15 +227,14 @@ app.get('/set_lightmode_cookie', function (req, res) {
   res.clearCookie();
   ```
 <p>You can then visit the route and check to ensure the cookies are indeed gone.</p>
+
 <h1>Best Practices</h1>
-<p>
-  1. Avoid storing sensitive information, such as passwords, as cookies are stored in plain text 2.
-  Restrict that cookie to only your application - __path__ argument 3. Don't Share With Sub Domains:
-  Use the __domain__ option 4. Only for Secure Connections: Using the __secure__ option you can tell
-  the browser (or other http clients) to only send the cookie over SSL connections 5. Protect
-  Against XSS Exploits: The __httpOnly__ flag is used to tell the browser that it should not allow
-  javascript to access the contents of the cookie
-</p>
+
+- Avoid storing sensitive information, such as passwords, as cookies are stored in plain text.
+- Restrict the cookie to only your application by using the **path** argument.
+- Don't share With subdomains: Use the **domain** option.
+- Only for secure connections: Using the **secure** option you can tell the browser (or other http clients) to only send the cookie over SSL connections.
+- Protect against XSS exploits: The **httpOnly** flag is used to tell the browser that it should not allow javascript to access the contents of the cookie.
 
 <p>A typical snippet:</p>
 
