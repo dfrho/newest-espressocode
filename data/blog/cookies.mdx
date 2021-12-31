@@ -73,7 +73,7 @@ images: ['/static/images/cookies.webp', '/static/images/twitter-social-card.png'
 </p>
 
 <p>
-  Notice in the dev tools images above in the **Storage** section there are multiple listings.
+  Notice in the dev tools image above in the **Storage** section there are multiple listings.
   _IndexedDB_, _Local Storage_, and _Session Storage_ APIs are increasingly used more than _Cookies_
   for storing user data client-side, while _Cookies_ are increasingly used more to store Session IDs
   because of size constraints (cookies only store 4kb). _Cookies_ are also limited in their total
@@ -115,7 +115,7 @@ images: ['/static/images/cookies.webp', '/static/images/twitter-social-card.png'
   Javascript engineer, I'll use Node.js and Express. Express is a "Node application framework" that
   abstracts the building and maintenance of a Node.js server. Using Express, we can set, adjust, and
   delete cookies from each route. So let's create a bare-bones app to demonstrate how to work with
-  cookies. First we'll install the libraries express, dayjs and cookie-parser:
+  cookies. First we'll install the libraries __express__, __dayjs__ and __cookie-parser__:
 </p>
 
 ```
@@ -162,8 +162,8 @@ app.listen(3000);
 
 <p>
   Now run the app by entering ```node index.js``` in the console, and navigate your browser to
-  ```http://localhost:3000/```. Open dev tools and click on the **Application** tab, **Storage**
-  section and you should see the flags set noted as below:
+  ```http://localhost:3000/```. You should see "Hello" in the browser. Open dev tools and click on
+  the **Application** tab, **Storage** section and you should see the flags set noted as below:
 </p>
 
 ![cookie set in dev tools](/static/images/cookies-two.png)
@@ -226,13 +226,15 @@ app.get('/set_lightmode_cookie', function (req, res) {
   ```Javascript
   res.clearCookie();
   ```
+<p>You can then visit the route and check to ensure the cookies are indeed gone.</p>
 <h1>Best Practices</h1>
 <p>
-1. Avoid storing sensitive information, such as passwords, as cookies are stored in plain text
-2. Restrict that cookie to only your application - __path__ argument
-3. Don't Share With Sub Domains: Use the __domain__ option
-4. Only for Secure Connections: Using the __secure__ option you can tell the browser (or other http clients) to only send the cookie over SSL connections
-5. Protect Against XSS Exploits: The __httpOnly__ flag is used to tell the browser that it should not allow javascript to access the contents of the cookie
+  1. Avoid storing sensitive information, such as passwords, as cookies are stored in plain text 2.
+  Restrict that cookie to only your application - __path__ argument 3. Don't Share With Sub Domains:
+  Use the __domain__ option 4. Only for Secure Connections: Using the __secure__ option you can tell
+  the browser (or other http clients) to only send the cookie over SSL connections 5. Protect
+  Against XSS Exploits: The __httpOnly__ flag is used to tell the browser that it should not allow
+  javascript to access the contents of the cookie
 </p>
 
 <p>A typical snippet:</p>
