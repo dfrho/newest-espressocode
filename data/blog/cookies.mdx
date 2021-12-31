@@ -1,0 +1,257 @@
+---
+title: All About Cookies
+date: '2021-12-29'
+summary: 'enhancing, monitoring, remembering'
+tags: [learning, engineering]
+images: ['/static/images/cookies.webp', '/static/images/twitter-social-card.png']
+---
+
+![cookie being made](/static/images/cookies.webp)
+
+<p>
+  What's the big deal about cookies? HTTP cookies, aka "magic" cookies, are the handshake that makes
+  communicating between a server and a client possible. In this article we'll explore exactly what
+  they are, why they are used, and how they are made.
+</p>
+
+<h1>What's a Cookie?</h1>
+<p>
+  Cookies are small text files comprised of name/value pairs in a string. For example, you can set
+  them in Javascript with:
+</p>
+``` document.cookie = "username=JohnDoe" ```
+<p>
+  Cookies are passed between server and client and upon return calls from client to server. And,
+  cookies can be set or read server side, or client side (as long as the __httpOnly__ flag is set to
+  "false"). You can view a browser's cookies by looking in your browser's dev tools under the
+  **Applications** tab, **Storage** section:
+</p>
+![cookies in dev tools](/static/images/apptab.png)
+<p>
+  Lou Montulli, a web programmer for Netscape, came up with the cookie architecture in 1994 when he
+  needed a way to remember their client MCI's e-commerce carts. Which leads to one of the main
+  reasons why cookies were used...
+</p>
+
+<h1>Why Use Cookies?</h1>
+<p>
+  __Cookies have been used to enhance end web users' experience, by monitoring or remembering
+  them.__ HTTP is designed as a stateless protocol, so state information is not retained between
+  server calls by default. In the above MCI example, cookies served to remember the user's cart so
+  they could return to a shopping experience later without it forgetting their items. Some other
+  ways client side storage is used to enhance a user's web experience are:
+</p>
+
+- UI preferences, like light/dark mode;
+- Authentication, or login;
+- Authorization, aka role-based content access;
+- Personalization
+- Recommendations
+- Tracking browser activity, purchases, product preferences, IP address, geolocation, etc. for more targeted advertising
+
+<p>
+  Cookies can be thought of as a coded wristband you're assigned at a music festival or amusement
+  park. It can be used to match your identity, wallet, emergency contact, and purchase preferences
+  -- all personal details designed to enhance your user experience.
+</p>
+
+<h1>Cookies vs. Sessions</h1>
+<p>
+  There's a distinction you may find helpful as cookies and sessions are very similar. The
+  difference between cookies and sessions is simple: Cookies store user information on the
+  __client__, and sessions store user information on the __server__. Session data is available for
+  all pages served by the site. The reason you'd want to store information server-side is because
+  you can validate it, therefore manipulate and sanitize it. 
+  
+  There are two ways to implement sessions:
+
+1. Store everything on the cookie.
+2. Store a unique ID in the cookie and the remaining data points on the server.
+
+#2 is the recommended way to implement sessions.
+
+</p>
+
+<p>
+  Notice in the dev tools images above in the **Storage** section there are multiple listings.
+  _IndexedDB_, _Local Storage_, and _Session Storage_ APIs are increasingly used more than _Cookies_
+  for storing user data client-side, while _Cookies_ are increasingly used more to store Session IDs
+  because of size constraints (cookies only store 4kb). _Cookies_ are also limited in their total
+  number and new ones replace oldest ones when the maximum number is reached.
+</p>
+
+<h1>Arguments Against Cookies</h1>
+<p>
+  Perhaps no other area of web architecture has been more hotly contested than that of cookies.
+  Cookies that follow your behavior across the web have been known to track hundreds of data points
+  about users, although nothing that's personally identifiable. The [Cambridge Analytica/Facebook
+  Scandal](https://en.wikipedia.org/wiki/Facebook%E2%80%93Cambridge_Analytica_data_scandal) is a
+  perfect example of such [targeted advertising](https://en.wikipedia.org/wiki/Targeted_advertising)
+  gone horribly wrong.
+</p>
+
+<p>
+  And cookies are one of the most commonly-exploited vectors for hackers. [Decoding
+  cookies](https://latesthackingnews.com/2017/08/16/hacking-cookies/), [session
+  hijacking](https://www.venafi.com/blog/what-session-hijacking#:~:text=Session%20hijacking%2C%20also%20known%20as,masquerading%20as%20the%20authorized%20user.),
+  and [session fixation](https://owasp.org/www-community/attacks/Session_fixation) are all ways
+  cookies can be exploited to hack users.
+</p>
+
+<p>
+  Government regulation has stepped in to ensure consumers are at least notified about cookies and
+  the information tracked. The European Union instituted the
+  [GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation), or General Data
+  Protection Regulation, in 2018. In the same year, California passed the
+  [CCPA](https://en.wikipedia.org/wiki/California_Consumer_Privacy_Act), or California Consumer
+  Privacy Act. Both cover the right-to-know what is being tracked and the right-to-opt-out of
+  tracking. As a result, a cottage industry around compliance to the new regulations sprung up.
+</p>
+
+<h1>How to Set Cookies</h1>
+<p>
+  Cookies are passed between the server and client, and as such, can be set by the server or client.
+  Your back-end can be coded in a variety of languages including PHP, Python, and Node.js. As a
+  Javascript engineer, I'll use Node.js and Express. Express is a "Node application framework" that
+  abstracts the building and maintenance of a Node.js server. Using Express, we can set, adjust, and
+  delete cookies from each route. So let's create a bare-bones app to demonstrate how to work with
+  cookies. First we'll install the libraries express, dayjs and cookie-parser:
+</p>
+
+```
+npm install express cookie-parser dayjs
+```
+
+<p>Then, in your project's __index.js__ file, let's set up the express boilerplate:</p>
+
+```Javascript
+const express = require("express")
+const cookieParser = require("cookie-parser")
+const dayjs = require("dayjs");
+const app = express()
+app.use(cookieParser())
+```
+
+<p>Then, set up the home route with a cookie:</p>
+
+```Javascript
+app.get("/", (req, res) => {
+  res.cookie("darkmode", "true", {
+      secure: process.env.NODE_ENV !== "development",
+      httpOnly: true,
+      expires: dayjs().add(30, "days").toDate(),
+    });
+
+  res.send("Hello.");
+
+})
+
+app.listen(3000);
+```
+
+<p>
+  A few things are happening here after setting up the server; I'll explain then illustrate how they
+  show up in dev tools. First and most importantly, we're setting a cookie with the name/value pair
+  of "darkmode"/"true". Then we are protecting that information by setting the __secure__ flag to a
+  boolean depending on whether it's development mode or not (this is for learning purposes; we'd
+  more than likely **not** protect UI information like dark mode!). Next, we're setting __httpOnly__
+  to true to ensure there are no cross-site scripting attacks by guaranteeing the cookie can only be
+  read by this client and server, no others. And finally, we're setting this cookie to the browser
+  cache for 30 days with the __expires__ flag.
+</p>
+
+<p>
+  Now run the app by entering ```node index.js``` in the console, and navigate your browser to
+  ```http://localhost:3000/```. Open dev tools and click on the **Application** tab, **Storage**
+  section and you should see the flags set noted as below:
+</p>
+
+![cookie set in dev tools](/static/images/cookies-two.png)
+
+<h1>How to Read Cookies</h1>
+<p>
+  Two great libraries to use for reading cookies with Express are __cookie-parser__ and
+  __express-cookie__. For learning purposes let's go under the hood though and demonstrate a helper
+  function for setting all the request's cookies into an object with name/value properties:
+</p>
+
+```Javascript
+const getCookies = (req) => {
+  const cookies = req.headers.cookie.split('; ');
+  const parsedCookies = {};
+
+  cookies.forEach(rawCookie => {
+    const parsedCookie = rawCookie.split('=');
+    parsedCookies[parsedCookie[0]] = parsedCookie[1];
+  });
+
+  return parsedCookies;
+};
+```
+
+<h1>How to Update Cookies</h1>
+<p>
+  Just update the property as the second parameter for the _res.cookie_ method. Note you need to
+  include the previous options as the third object properties if you want to maintain them. Try the
+  new route in your app and check dev tools to ensure the __darkmode__ property is set to false,
+  while **HttpOnly** and **Secure** are checked.
+</p>
+
+```Javascript
+app.get('/set_lightmode_cookie', function (req, res) {
+  res.cookie('darkmode', 'false', {
+    secure: process.env.NODE_ENV !== 'development',
+    httpOnly: true,
+    expires: dayjs().add(30, 'days').toDate(),
+  });
+  res.send('cookie lightmode set');
+});
+```
+
+<h1>How to Delete Cookies</h1>
+<p>
+  Deleting Cookies with Express is easy. There are two approaches, deleting by value name, or deleting all. 
+  __Deleting by value name:__
+</p>
+  
+  ```Javascript
+  app.get('/clear_darkmode_cookie', function (req, res) {
+    res.clearCookie('darkmode');
+    res.send('cookie darkmode cleared');
+  });
+  ```
+<p>
+  To delete __all__ cookies, just use the **clearCookie** method without a name parameter:
+</p>
+  ```Javascript
+  res.clearCookie();
+  ```
+<h1>Best Practices</h1>
+<p>
+1. Avoid storing sensitive information, such as passwords, as cookies are stored in plain text
+2. Restrict that cookie to only your application - __path__ argument
+3. Don't Share With Sub Domains: Use the __domain__ option
+4. Only for Secure Connections: Using the __secure__ option you can tell the browser (or other http clients) to only send the cookie over SSL connections
+5. Protect Against XSS Exploits: The __httpOnly__ flag is used to tell the browser that it should not allow javascript to access the contents of the cookie
+</p>
+
+<p>A typical snippet:</p>
+
+```Javascript
+res.cookie('name', 'Tobias', {
+  domain: '.example.com',  // Domain name for cookie - Defaults to app domain name
+  path: '/admin', // Path for the cookie - Defaults to '/'
+  secure: true, // cookies will be sent to server only on https
+  httpOnly: true // Javascript client cannot read this cookie
+});
+```
+
+<h1>Summary</h1>
+<p>
+  Cookies are used to enhance the security and user experience of web users. While the root of
+  controversy around privacy, recent legislative initiatives have provided some relief and will more
+  than likely go global. Creating, reading, updating, and deleting cookies are easy with Express, a
+  Node.js server framework. Nowadays, because of alternatives and storage contraints, cookies are
+  used mostly for session IDs. Now you've got some answers when asked about cookies from an
+  historic, architectural, and coding standpoint.
+</p>
