@@ -232,9 +232,9 @@ app.get('/set_lightmode_cookie', function (req, res) {
 
 - Avoid storing sensitive information, such as passwords, as cookies are stored in plain text.
 - Restrict the cookie to only your application by using the **path** argument.
-- Don't share With subdomains: Use the **domain** option.
+- Don't share with subdomains: Use the **domain** option.
 - Only for secure connections: Using the **secure** option you can tell the browser (or other http clients) to only send the cookie over SSL connections.
-- Protect against XSS exploits: The **httpOnly** flag is used to tell the browser that it should not allow javascript to access the contents of the cookie.
+- Protect against XSS exploits: The **httpOnly** flag is used to tell the browser that it should not allow Javascript to access the contents of the cookie.
 
 <p>A typical snippet:</p>
 
