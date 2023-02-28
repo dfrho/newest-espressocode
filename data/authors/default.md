@@ -1,6 +1,6 @@
 ---
 name: David Rhodes
-avatar: /static/images/avatar.jpg
+avatar: /static/images/avatar-new.jpg
 occupation: Sr Solutions Support Engineer
 company: Shogun
 email: david@espressocode.tech

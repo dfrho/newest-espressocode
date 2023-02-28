@@ -1,0 +1,79 @@
+---
+title: Understanding ISR in Next.js
+date: '2023-02-28'
+summary: 'Exploring the use cases and benefits of Incremental Static Regeneration in Next.js, and how it fits into the different rendering approaches in the framework.'
+tags: [Next.js, static site generation, server-side rendering, client-side rendering]
+images: ['/static/images/james-wiseman-unsplash.jpg']
+---
+
+![nextjs code](/static/images/james-wiseman-unsplash.webp)
+
+Next.js is a popular React framework that provides various rendering approaches to create fast and performant web applications. One of the key features of Next.js is Static Site Generation (SSG), which allows you to pre-build and serve static pages that can be hosted on a Content Delivery Network (CDN) for fast delivery to users.
+
+However, static site generation has limitations, such as the inability to handle real-time data or dynamic content. That's where Incremental Static Regeneration (ISR) comes in. ISR allows you to regenerate specific pages or parts of pages on-demand, while still benefiting from the performance benefits of static site generation.
+
+# What is Incremental Static Regeneration?
+
+Incremental Static Regeneration (ISR) is a feature in Next.js that enables you to generate static pages on-demand at runtime. In traditional static site generation, all pages are pre-generated at build time, resulting in a complete set of HTML files. However, this can be limiting in scenarios where the data changes frequently or where there are a large number of pages that need to be pre-generated.
+
+With ISR, Next.js can pre-build only the essential parts of the site at build time, such as the navigation and layout, and leave the dynamic content to be generated on-demand at runtime. When a request is made for a specific page, the server generates the content for that page on-the-fly using data fetched from APIs or databases.
+
+# Use Cases of Incremental Static Regeneration
+
+ISR can be useful in a variety of scenarios in a Next.js site. Here are a few:
+
+- E-commerce websites: In an e-commerce website, products and prices can change frequently. With ISR, you can pre-generate the product catalog and other static parts of the site, while still allowing the dynamic parts like product availability and pricing to be generated on-the-fly at runtime.
+
+- Large websites: In a large website with a lot of pages, pre-generating all the pages at build time may not be practical. ISR pre-generates only the essential parts of the site, such as the navigation and layout, and leave the dynamic content to be generated on-demand at runtime.
+
+- News websites: In a news website, articles can be published frequently, and readers expect to see the latest news as soon as it is available. Using ISR, you can pre-generate the static parts of the site and use server-side rendering to generate the latest articles on-the-fly at runtime.
+
+# Where Incremental Static Regeneration Falls in the Next.js Rendering Approaches
+
+ISR is specific to the Static Site Generation (SSG) rendering mode in Next.js. In SSG mode, all pages of a website are pre-rendered as static HTML files at build time. This approach provides fast and efficient performance, as the static files can be served quickly from a Content Delivery Network (CDN) or web server.
+
+In contrast, the other two rendering modes in Next.js, Server-side Rendering (SSR) and Client-side Rendering (CSR), do not use Incremental Static Regeneration. In SSR mode, pages are generated on-the-fly on the server in response to client requests. In CSR mode, the entire application is generated on the client-side using JavaScript.
+
+# How to Change the Rendering Method by Page in Next.js
+
+Next.js provides a way to specify the rendering mode for each page in your application using a feature called "hybrid mode".
+
+Hybrid mode allows you to mix and match rendering modes within your application. For example, you can use Static Site Generation for most of your pages but switch to Server-side Rendering for a specific page that requires dynamic data.
+
+To use hybrid mode, you can specify the rendering mode for each page in the getInitialProps function of the page component. Here's an example of how you can use hybrid mode to switch the rendering mode for a specific page:
+
+```Javascript
+import { getServerSideProps } from '../lib/data';
+
+function MyPage(props) {
+  // ...
+}
+
+MyPage.getInitialProps = async (ctx) => {
+  if (ctx.req) {
+    // If the page is being requested server-side,
+    // use Server-side Rendering mode.
+    const data = await getServerSideProps();
+    return { props: data };
+  } else {
+    // If the page is being requested client-side,
+    // use Client-side Rendering mode.
+    return { props: {} };
+  }
+};
+
+export default MyPage;
+
+```
+
+In this example, the getInitialProps function checks whether the page is being requested server-side or client-side. If the page is being requested server-side, it uses the getServerSideProps function to fetch data and return it as props. If the page is being requested client-side, it returns an empty props object.
+
+By using hybrid mode in this way, you can change the rendering mode by page and provide the best possible user experience for each page in your application.
+
+# Summary
+
+Incremental Static Regeneration is a powerful feature of Next.js that allows you to generate static pages on-demand at runtime while still benefiting from the performance benefits of static site generation. ISR can be useful in a variety of scenarios, such as e-commerce websites, large websites, and news websites.
+
+When it comes to rendering approaches in Next.js, ISR is specific to the Static Site Generation (SSG) mode. In contrast, Server-side Rendering (SSR) and Client-side Rendering (CSR) do not use ISR. However, Next.js provides a way to specify the rendering mode for each page in your application using hybrid mode, which allows you to mix and match rendering modes within your application and change the rendering mode by page to provide the best possible user experience.
+
+Whether you're building a small website or a large application, understanding the different rendering approaches and features available in Next.js can help you create fast and performant web applications that meet the needs of your users. By leveraging Incremental Static Regeneration and other features in Next.js, you can provide a great user experience while still maintaining the speed and performance that users expect from modern web applications.
