@@ -38,9 +38,19 @@ In contrast, the other two rendering modes in Next.js, Server-side Rendering (SS
 
 Next.js provides a way to specify the rendering mode for each page in your application using a feature called "hybrid mode".
 
-Hybrid mode allows you to mix and match rendering modes within your application. For example, you can use Static Site Generation for most of your pages but switch to Server-side Rendering for a specific page that requires dynamic data.
+Hybrid mode allows you to mix and match rendering modes within your application. For example, you can use Static Site Generation for most of your pages but switch to Server-side Rendering for a specific page that requires dynamic data. To activate, you need to enable the experimental-hybrid-pages flag in your Next.js configuration. You can do this by first ensuring you are using at least version 10.0.0 or higher of Next.js (`npm run next -v`), then creating a `next.config.js` file in the root directory of your Next.js project, if one does not already exist, and adding the following code:
 
-To use hybrid mode, you can specify the rendering mode for each page in the getInitialProps function of the page component. Here's an example of how you can use hybrid mode to switch the rendering mode for a specific page:
+```Javascript
+
+module.exports = {
+ experimental: {
+   hybrid: true,
+ },
+};
+
+```
+
+Then in your Hybrid page, you can specify the rendering mode for each page in the getInitialProps function of the page component. Here's an example of how you can use hybrid mode to switch the rendering mode for a specific page:
 
 ```Javascript
 import Head from 'next/head';
