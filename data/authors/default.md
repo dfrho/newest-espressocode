@@ -2,7 +2,7 @@
 name: David Rhodes
 avatar: /static/images/avatar-new.jpg
 occupation: Sr Solutions Support Engineer
-company: Shogun
+company: formerly FullStory
 email: david@espressocode.tech
 twitter: https://twitter.com/rhodesdav
 linkedin: https://www.linkedin.com/in/rhodesdavid/
