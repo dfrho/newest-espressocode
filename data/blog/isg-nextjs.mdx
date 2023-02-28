@@ -39,7 +39,7 @@ In contrast, the other two rendering modes in Next.js, Server-side Rendering (SS
 Define your getStaticProps function in your page component. This function should fetch the data that you want to statically generate and return it as props.
 
 Set the revalidate option in the getStaticProps return object. This option determines how often Next.js will regenerate the page on the server-side. For ISR, you should set this value to the number of seconds you want to wait before regenerating the page -- here, the page will be regenerated every 60 seconds.
-Latin phrases (this open API) may not be updated every minute, but imagine a news feed, or CRM sales results countdown at the end of the quarter?
+Latin phrases (this open API) may not be updated every minute, but imagine a news feed, or a CRM sales results countdown at the end of the quarter?
 
 ```JavaScript
 export async function getStaticProps() {
