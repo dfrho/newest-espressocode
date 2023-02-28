@@ -1,6 +1,6 @@
 # EspressoCode was built with the [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)
 
-This is my blog build using a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) blogging starter template. Probably the most feature rich nextjs markdown blogging template out there. I didn't build it and the readme comes from the template mostly. Comes out of the box configured with the latest technologies to make technical writing a breeze while learning. Easily configurable and customizable.
+This is my blog built using a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) blogging starter template. Probably the most feature rich nextjs markdown blogging template out there. I didn't build it and the readme comes from the template mostly. Comes out of the box configured with the latest technologies to make technical writing a breeze while learning. Easily configurable and customizable.
 
 [Tim the Author's personal blog](https://www.timlrx.com) - modified to auto-generate blog posts with dates. Check out his repo linked above to get started on your own version.
 
