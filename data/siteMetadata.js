@@ -11,7 +11,7 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   email: 'david@espressocode.tech',
   github: 'https://github.com/dfrho',
-  twitter: 'https://twitter.com/Twitter/rhodesdav',
+  twitter: 'https://twitter.com/rhodesdav',
   linkedin: 'https://www.linkedin.com/in/rhodesdavid/',
   locale: 'en-US',
   analytics: {
