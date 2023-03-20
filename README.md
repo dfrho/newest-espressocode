@@ -26,3 +26,5 @@ EspressoCode includes some of the features and configurations provided by the Ta
 - Supports giscus, utterances or Disqus
 - Projects page
 - SEO friendly with RSS feed, sitemaps and more!
+
+[Convert Images to webp:](https://convertio.co/jpg-webp/)

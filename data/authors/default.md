@@ -1,7 +1,7 @@
 ---
 name: David Rhodes
-avatar: /static/images/avatar-new.jpg
-occupation: Sr Solutions Support Engineer
+avatar: /static/images/avatar-two.jpg
+occupation: Sr Customer-Facing Engineer
 company: formerly FullStory
 email: david@espressocode.tech
 twitter: https://twitter.com/rhodesdav
