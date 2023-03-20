@@ -7,7 +7,7 @@ const siteMetadata = {
   siteUrl: 'https://www.espressocode.tech',
   siteRepo: 'https://github.com/dfrho/newest-espressocode',
   siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar-new.jpg',
+  image: '/static/images/avatar-two.jpg',
   socialBanner: '/static/images/twitter-card.png',
   email: 'david@espressocode.tech',
   github: 'https://github.com/dfrho',
