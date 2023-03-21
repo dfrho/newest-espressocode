@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Payment from '../components/Payment'
+import copyLightIcon from '../public/static/icons/copylight.svg'
 
 const CheckoutContainer = styled.section`
   display: grid;
@@ -50,17 +51,61 @@ const ProductDetails = styled.div`
 const ProductTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
-  margin-bottom: 16px;
+  padding-top: 10px;
+  margin-bottom: 10px;
 `
 
 const ProductPrice = styled.h5`
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
+`
+
+const CopyIcon = styled.svg`
+  width: 12px;
+  height: 12px;
+  color: #fff;
+  margin-right: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const CopyButton = styled.button`
+  display: inline-block;
+  background-color: green;
+  border: 1px solid gray;
+  padding: 4px 16px;
+  border-radius: 4px;
+  margin-right: 16px;
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  &:hover {
+    background-color: darkgreen;
+  }
+  @media (max-width: 640px) {
+    min-width: 3rem;
+    min-height: 1.5rem;
+  }
+`
+
+const CopyButtonDiv = styled.div`
+  display: flex;
+  align-items: center;
+  max-width: content;
+  padding: 5px;
 `
 
 export default function Checkout() {
   const [message, setMessage] = useState('')
+  const [copied, setCopied] = useState(false)
+  const handleCopyClick = (event) => {
+    event.preventDefault()
+    navigator.clipboard.writeText('5555 5555 5555 4444')
+    setCopied(true)
+  }
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -85,9 +130,15 @@ export default function Checkout() {
         <ProductDetails>
           <ProductTitle>MVP Application Architect and Build</ProductTitle>
           <ProductPrice>$5000.00</ProductPrice>
-          <p>
-            <b>this is a test purchase</b>e
-          </p>
+          <span>
+            <CopyButton onClick={handleCopyClick}>
+              <CopyButtonDiv>
+                {!copied && <CopyIcon as={copyLightIcon} />}
+                {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
+              </CopyButtonDiv>
+            </CopyButton>
+            <b>(this is a test purchase)</b>
+          </span>
         </ProductDetails>
       </ProductContainer>
       <PaymentContainer>
