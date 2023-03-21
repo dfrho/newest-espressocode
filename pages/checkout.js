@@ -11,6 +11,7 @@ const CheckoutContainer = styled.section`
   align-items: start;
   justify-content: center;
   padding: 0px 22px;
+  overflow-x: hidden;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -95,6 +96,7 @@ const CopyButton = styled.button`
   padding: 4px 16px;
   border-radius: 4px;
   margin-right: 16px;
+  margin-top: 8px;
   cursor: pointer;
   color: #fff;
   font-family: Arial, sans-serif;
