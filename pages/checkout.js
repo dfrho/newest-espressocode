@@ -16,7 +16,17 @@ const CheckoutContainer = styled.section`
     grid-template-columns: 1fr;
     padding: 12px;
   }
-  //
+  // Assign the grid areas to each child element
+  & > div.product {
+    grid-area: product;
+  }
+  & > div.payment {
+    grid-area: payment;
+  }
+  & > div.test-button-container {
+    grid-area: test-button;
+    width: 100%;
+  }
 `
 
 const ProductContainer = styled.div`
@@ -32,6 +42,12 @@ const ProductContainer = styled.div`
 const PaymentContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+const TestButtonContainer = styled.div`
+  display: flex;
   align-items: center;
   justify-content: center;
 `
@@ -69,13 +85,17 @@ const CopyIcon = styled.svg`
   color: #fff;
   margin-right: 8px;
 
+  @media (max-width: 768px) {
+    min-width: 12px;
+    min-height: 12px;
+  }
+
   &:hover {
     cursor: pointer;
   }
 `
 
 const CopyButton = styled.button`
-  display: inline-block;
   background-color: #5868cd;
   border: 1px solid gray;
   padding: 4px 16px;
@@ -83,11 +103,25 @@ const CopyButton = styled.button`
   margin-right: 16px;
   cursor: pointer;
   color: #fff;
+  font-family: Arial, sans-serif;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
   outline: none;
   @media (max-width: 640px) {
     min-width: 3rem;
     min-height: 1.5rem;
+    margin-right: 0px;
   }
+`
+
+//make a styled component for text that is centered in mobile view but flush left in desktop view
+const CopyButtonText = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin-top: 8px;
 `
 
 const CopyButtonDiv = styled.div`
@@ -131,21 +165,23 @@ export default function Checkout() {
           <ProductDetails>
             <ProductTitle>MVP Application Architect and Build</ProductTitle>
             <ProductPrice>$5000.00</ProductPrice>
-            <span>
-              <CopyButton onClick={handleCopyClick}>
-                <CopyButtonDiv>
-                  {!copied && <CopyIcon as={copyLightIcon} />}
-                  {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
-                </CopyButtonDiv>
-              </CopyButton>
-              <b>(this is a test purchase)</b>
-            </span>
           </ProductDetails>
         </ProductContainer>
         <PaymentContainer>
           <Payment />
         </PaymentContainer>
       </CheckoutContainer>
+      <TestButtonContainer>
+        <div className="test-button">
+          <CopyButton onClick={handleCopyClick}>
+            <CopyButtonDiv>
+              {!copied && <CopyIcon as={copyLightIcon} />}
+              {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
+            </CopyButtonDiv>
+          </CopyButton>
+          <CopyButtonText>(this is a test purchase)</CopyButtonText>
+        </div>
+      </TestButtonContainer>
     </>
   )
 }
