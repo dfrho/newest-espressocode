@@ -103,6 +103,10 @@ const CopyButton = styled.button`
   margin-right: 16px;
   cursor: pointer;
   color: #fff;
+  font-family: Arial, sans-serif;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
   outline: none;
   @media (max-width: 640px) {
     min-width: 3rem;
