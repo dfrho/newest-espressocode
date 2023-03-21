@@ -86,7 +86,7 @@ export default function Checkout() {
           <ProductTitle>MVP Application Architect and Build</ProductTitle>
           <ProductPrice>$5000.00</ProductPrice>
           <p>
-            <b>this is a test purchas</b>e
+            <b>this is a test purchase</b>e
           </p>
         </ProductDetails>
       </ProductContainer>
