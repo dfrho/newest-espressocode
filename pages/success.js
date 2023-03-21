@@ -13,6 +13,7 @@ const PaymentSuccessContainer = styled.div`
 
 const PaymentSuccess = () => {
   const size = useWindowSize()
+  console.log('🚀 ~ file: success.js:16 ~ PaymentSuccess ~ size:', size)
   return (
     <>
       <Confetti recycle={false} width={size.width} height={size.height} />
