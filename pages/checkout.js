@@ -9,10 +9,11 @@ const CheckoutContainer = styled.section`
   grid-gap: 12px;
   align-items: start;
   justify-content: center;
-  padding: 22px;
+  padding: 0px 22px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    padding: 12px;
   }
 `
 
@@ -45,14 +46,13 @@ const ProductDetails = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 12px;
 `
 
 const ProductTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
   padding-top: 10px;
-  margin-bottom: 10px;
 `
 
 const ProductPrice = styled.h5`
