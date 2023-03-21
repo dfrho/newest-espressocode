@@ -11,6 +11,7 @@ const CheckoutContainer = styled.section`
   align-items: start;
   justify-content: center;
   padding: 0px 22px;
+  overflow-x: hidden;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
