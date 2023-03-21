@@ -15,10 +15,10 @@ const PaymentSuccess = () => {
   return (
     <>
       <PaymentSuccessContainer>
+        <Confetti recycle={false} width={width} height={height} />
         <h1>Payment Successful!</h1>
         <p>Thank you for your purchase.</p>
       </PaymentSuccessContainer>
-      <Confetti recycle={false} width={width} height={height} />
     </>
   )
 }
