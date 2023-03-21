@@ -16,13 +16,7 @@ const CheckoutContainer = styled.section`
     grid-template-columns: 1fr;
     padding: 12px;
   }
-  // Assign the grid areas to each child element
-  & > div.product {
-    grid-area: product;
-  }
-  & > div.payment {
-    grid-area: payment;
-  }
+  // Assign the grid areas to a child element
   & > div.test-button-container {
     grid-area: test-button;
     width: 100%;
@@ -32,6 +26,7 @@ const CheckoutContainer = styled.section`
 const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
   align-items: center;
   justify-content: center;
   @media (max-width: 768px) {
@@ -54,7 +49,6 @@ const TestButtonContainer = styled.div`
 
 const ProductImage = styled.img`
   border-radius: 4px;
-  width: 100%;
   max-width: 500px;
   height: auto;
 `
@@ -64,7 +58,7 @@ const ProductDetails = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 12px;
+  padding-top: 22px;
 `
 
 const ProductTitle = styled.h3`
@@ -164,7 +158,7 @@ export default function Checkout() {
       <CheckoutContainer>
         <ProductContainer>
           <ProductImage
-            src="https://i.imgur.com/EHyR2nP.png"
+            src="/static/images/design-build.webp"
             alt="The cover of Stubborn Attachments"
           />
           <ProductDetails>
@@ -174,21 +168,21 @@ export default function Checkout() {
         </ProductContainer>
         <PaymentContainer>
           <Payment />
+          {showCopyButton && (
+            <TestButtonContainer>
+              <div className="test-button">
+                <CopyButton onClick={handleCopyClick}>
+                  <CopyButtonDiv>
+                    {!copied && <CopyIcon as={copyLightIcon} />}
+                    {copied ? 'Copied! Use any Exp/CVC' : 'Copy Test CC Number'}
+                  </CopyButtonDiv>
+                </CopyButton>
+                <CopyButtonText>(this is a test purchase)</CopyButtonText>
+              </div>
+            </TestButtonContainer>
+          )}
         </PaymentContainer>
       </CheckoutContainer>
-      {showCopyButton && (
-        <TestButtonContainer>
-          <div className="test-button">
-            <CopyButton onClick={handleCopyClick}>
-              <CopyButtonDiv>
-                {!copied && <CopyIcon as={copyLightIcon} />}
-                {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
-              </CopyButtonDiv>
-            </CopyButton>
-            <CopyButtonText>(this is a test purchase)</CopyButtonText>
-          </div>
-        </TestButtonContainer>
-      )}
     </>
   )
 }
