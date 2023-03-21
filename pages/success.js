@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import Confetti from 'react-confetti'
-import useWindowSize from '../lib/use-window-size'
+import party from 'party-js'
 
-const PaymentSuccessContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`
+const PartyThanks = () => {
+  const thanksRef = useRef(null)
 
-const PaymentSuccess = () => {
-  const size = useWindowSize()
-  console.log('🚀 ~ file: success.js:16 ~ PaymentSuccess ~ size:', size)
+  useEffect(() => {
+    if (thanksRef.current) {
+      party.confetti(thanksRef.current)
+    }
+  }, [])
+
   return (
     <>
-      <Confetti recycle={false} width={size.width} height={size.height} />
-      <PaymentSuccessContainer>
+      <PaymentSuccessContainer ref={thanksRef}>
         <h1>Payment Successful!</h1>
         <p>Thank you for your purchase.</p>
       </PaymentSuccessContainer>
@@ -25,4 +21,13 @@ const PaymentSuccess = () => {
   )
 }
 
-export default PaymentSuccess
+const PaymentSuccessContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 10rem;
+  height: 100vh;
+`
+
+export default PartyThanks
