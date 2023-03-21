@@ -8,14 +8,15 @@ const PaymentSuccessContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
 `
 
 const PaymentSuccess = () => {
-  const { width, height } = useWindowSize()
+  const size = useWindowSize()
   return (
     <>
+      <Confetti recycle={false} width={size.width} height={size.height} />
       <PaymentSuccessContainer>
-        <Confetti recycle={false} width={width} height={height} />
         <h1>Payment Successful!</h1>
         <p>Thank you for your purchase.</p>
       </PaymentSuccessContainer>
