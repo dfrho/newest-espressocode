@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Payment from '../components/Payment'
 import copyLightIcon from '../public/static/icons/copylight.svg'
+import { PageSEO } from '../components/SEO'
 
 const CheckoutContainer = styled.section`
   display: grid;
@@ -15,6 +16,7 @@ const CheckoutContainer = styled.section`
     grid-template-columns: 1fr;
     padding: 12px;
   }
+  //
 `
 
 const ProductContainer = styled.div`
@@ -121,29 +123,32 @@ export default function Checkout() {
   }, [])
 
   return (
-    <CheckoutContainer>
-      <ProductContainer>
-        <ProductImage
-          src="https://i.imgur.com/EHyR2nP.png"
-          alt="The cover of Stubborn Attachments"
-        />
-        <ProductDetails>
-          <ProductTitle>MVP Application Architect and Build</ProductTitle>
-          <ProductPrice>$5000.00</ProductPrice>
-          <span>
-            <CopyButton onClick={handleCopyClick}>
-              <CopyButtonDiv>
-                {!copied && <CopyIcon as={copyLightIcon} />}
-                {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
-              </CopyButtonDiv>
-            </CopyButton>
-            <b>(this is a test purchase)</b>
-          </span>
-        </ProductDetails>
-      </ProductContainer>
-      <PaymentContainer>
-        <Payment />
-      </PaymentContainer>
-    </CheckoutContainer>
+    <>
+      <PageSEO title="Checkout" description="checkout page for design/build work" />
+      <CheckoutContainer>
+        <ProductContainer>
+          <ProductImage
+            src="https://i.imgur.com/EHyR2nP.png"
+            alt="The cover of Stubborn Attachments"
+          />
+          <ProductDetails>
+            <ProductTitle>MVP Application Architect and Build</ProductTitle>
+            <ProductPrice>$5000.00</ProductPrice>
+            <span>
+              <CopyButton onClick={handleCopyClick}>
+                <CopyButtonDiv>
+                  {!copied && <CopyIcon as={copyLightIcon} />}
+                  {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
+                </CopyButtonDiv>
+              </CopyButton>
+              <b>(this is a test purchase)</b>
+            </span>
+          </ProductDetails>
+        </ProductContainer>
+        <PaymentContainer>
+          <Payment />
+        </PaymentContainer>
+      </CheckoutContainer>
+    </>
   )
 }
