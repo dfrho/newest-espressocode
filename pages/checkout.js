@@ -44,7 +44,7 @@ const ProductDetails = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 20px;
+  padding-top: 20px;
 `
 
 const ProductTitle = styled.h3`
@@ -85,6 +85,9 @@ export default function Checkout() {
         <ProductDetails>
           <ProductTitle>MVP Application Architect and Build</ProductTitle>
           <ProductPrice>$5000.00</ProductPrice>
+          <p>
+            <b>this is a test purchase</b>e
+          </p>
         </ProductDetails>
       </ProductContainer>
       <PaymentContainer>

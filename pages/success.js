@@ -15,7 +15,9 @@ const PartyThanks = () => {
     <>
       <PaymentSuccessContainer ref={thanksRef}>
         <h1>Payment Successful!</h1>
-        <p>Thank you for your purchase.</p>
+        <p>
+          Thank you for your <b>test</b> purchase.
+        </p>
       </PaymentSuccessContainer>
     </>
   )
