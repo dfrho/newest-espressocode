@@ -82,11 +82,8 @@ const CopyButton = styled.button`
   border-radius: 4px;
   margin-right: 16px;
   cursor: pointer;
-  color: #fff;
+  color: #5868cd;
   outline: none;
-  &:hover {
-    background-color: darkgreen;
-  }
   @media (max-width: 640px) {
     min-width: 3rem;
     min-height: 1.5rem;
