@@ -24,7 +24,7 @@ EspressoCode includes some of the features and configurations provided by the Ta
 - Support for nested routing of blog posts
 - Newsletter component with support for Mailchimp, Buttondown, and Convertkit
 - Supports giscus, utterances or Disqus
-- Projects page
+- Payments page
 - SEO friendly with RSS feed, sitemaps and more!
 
 [Convert Images to webp:](https://convertio.co/jpg-webp/)
