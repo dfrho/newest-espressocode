@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  PaymentElement,
-  //   LinkAuthenticationElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import styled from 'styled-components'
 
 const StyledButton = styled.button`
@@ -106,8 +101,8 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000',
+        // TODO: Make sure to change this to your payment completion page
+        return_url: 'https://espressocode.tech',
       },
     })
 
@@ -132,10 +127,6 @@ export default function CheckoutForm() {
   return (
     <PaymentElementContainer>
       <PaymentForm id="payment-form" onSubmit={handleSubmit}>
-        {/* <LinkAuthenticationElement
-          id="link-authentication-element"
-          onChange={(e) => setEmail(e.target.value)}
-        /> */}
         <PaymentElement id="payment-element" options={paymentElementOptions} />
         <StyledButton disabled={isLoading || !stripe || !elements} id="submit">
           <span id="button-text">
