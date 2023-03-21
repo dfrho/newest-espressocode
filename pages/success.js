@@ -18,7 +18,7 @@ const PaymentSuccess = () => {
         <h1>Payment Successful!</h1>
         <p>Thank you for your purchase.</p>
       </PaymentSuccessContainer>
-      <Confetti width={width} height={height} />
+      <Confetti recycle={false} width={width} height={height} />
     </>
   )
 }
