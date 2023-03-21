@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  PaymentElement,
-  LinkAuthenticationElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import styled from 'styled-components'
 
 const StyledButton = styled.button`
@@ -37,7 +32,7 @@ const PaymentForm = styled.form`
   box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1),
     0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
-  padding: 20px;
+  padding: 10px;
 
   @media only screen and (min-width: 768px) {
     /* Adjusted styles for larger screens */
@@ -50,15 +45,14 @@ const PaymentForm = styled.form`
 const PaymentElementContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+  align-items: flex-start;
 `
 
 export default function CheckoutForm() {
   const stripe = useStripe()
   const elements = useElements()
 
-  const [email, setEmail] = useState('')
+  //   const [email, setEmail] = useState('')
   const [message, setMessage] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -107,8 +101,8 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000',
+        // TODO: Make sure to change this to your payment completion page
+        return_url: 'https://espressocode.tech/success',
       },
     })
 
@@ -133,10 +127,6 @@ export default function CheckoutForm() {
   return (
     <PaymentElementContainer>
       <PaymentForm id="payment-form" onSubmit={handleSubmit}>
-        <LinkAuthenticationElement
-          id="link-authentication-element"
-          onChange={(e) => setEmail(e.target.value)}
-        />
         <PaymentElement id="payment-element" options={paymentElementOptions} />
         <StyledButton disabled={isLoading || !stripe || !elements} id="submit">
           <span id="button-text">
