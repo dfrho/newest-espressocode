@@ -76,13 +76,13 @@ const CopyIcon = styled.svg`
 
 const CopyButton = styled.button`
   display: inline-block;
-  background-color: green;
+  background-color: #5868cd;
   border: 1px solid gray;
   padding: 4px 16px;
   border-radius: 4px;
   margin-right: 16px;
   cursor: pointer;
-  color: #5868cd;
+  color: #fff;
   outline: none;
   @media (max-width: 640px) {
     min-width: 3rem;
