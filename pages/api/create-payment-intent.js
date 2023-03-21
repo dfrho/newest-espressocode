@@ -5,11 +5,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2020-08-27',
 })
 
-const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 5000
+const calculateTotalAmount = (items) => {
+  let totalAmount = 0
+
+  for (const item of items) {
+    totalAmount += item.amount
+  }
+
+  return totalAmount
 }
 
 export default async function createPaymentIntent(req, res) {
@@ -18,11 +21,10 @@ export default async function createPaymentIntent(req, res) {
   }
 
   const { items } = req.body
-
   try {
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmount(items),
+      amount: calculateTotalAmount(items),
       currency: 'usd',
       automatic_payment_methods: {
         enabled: true,
