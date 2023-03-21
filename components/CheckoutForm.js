@@ -1,6 +1,57 @@
 import React, { useEffect, useState } from 'react'
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+const Spinner = styled.div`
+  color: #ffffff;
+  font-size: 22px;
+  text-indent: -99999px;
+  margin: 0px auto;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px;
+  transform: translateZ(0);
+
+  &:before,
+  &:after {
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  &:before {
+    width: 10.4px;
+    height: 20.4px;
+    background: #5469d4;
+    border-radius: 20.4px 0 0 20.4px;
+    top: -0.2px;
+    left: -0.2px;
+    transform-origin: 10.4px 10.2px;
+    animation: ${spin} 2s infinite ease 1.5s;
+  }
+
+  &:after {
+    width: 10.4px;
+    height: 10.2px;
+    background: #5469d4;
+    border-radius: 0 10.2px 10.2px 0;
+    top: -0.1px;
+    left: 10.2px;
+    transform-origin: 0px 10.2px;
+    animation: ${spin} 2s infinite ease;
+  }
+`
 
 const StyledButton = styled.button`
   background: #5469d4;
@@ -129,9 +180,7 @@ export default function CheckoutForm() {
       <PaymentForm id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
         <StyledButton disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}
-          </span>
+          <span id="button-text">{isLoading ? <Spinner id="spinner" /> : 'Pay now'}</span>
         </StyledButton>
         {message && <div id="payment-message">{message}</div>}
       </PaymentForm>
