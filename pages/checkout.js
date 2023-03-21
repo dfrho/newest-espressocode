@@ -134,10 +134,15 @@ const CopyButtonDiv = styled.div`
 export default function Checkout() {
   const [message, setMessage] = useState('')
   const [copied, setCopied] = useState(false)
+  const [showCopyButton, setShowCopyButton] = useState(true)
+
   const handleCopyClick = (event) => {
     event.preventDefault()
     navigator.clipboard.writeText('5555 5555 5555 4444')
     setCopied(true)
+    setTimeout(() => {
+      setShowCopyButton(false)
+    }, 3000)
   }
 
   useEffect(() => {
@@ -171,17 +176,19 @@ export default function Checkout() {
           <Payment />
         </PaymentContainer>
       </CheckoutContainer>
-      <TestButtonContainer>
-        <div className="test-button">
-          <CopyButton onClick={handleCopyClick}>
-            <CopyButtonDiv>
-              {!copied && <CopyIcon as={copyLightIcon} />}
-              {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
-            </CopyButtonDiv>
-          </CopyButton>
-          <CopyButtonText>(this is a test purchase)</CopyButtonText>
-        </div>
-      </TestButtonContainer>
+      {showCopyButton && (
+        <TestButtonContainer>
+          <div className="test-button">
+            <CopyButton onClick={handleCopyClick}>
+              <CopyButtonDiv>
+                {!copied && <CopyIcon as={copyLightIcon} />}
+                {copied ? 'Copied! Use any Exp/CSV' : 'Copy Test CC Number'}
+              </CopyButtonDiv>
+            </CopyButton>
+            <CopyButtonText>(this is a test purchase)</CopyButtonText>
+          </div>
+        </TestButtonContainer>
+      )}
     </>
   )
 }
