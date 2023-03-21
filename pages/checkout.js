@@ -50,13 +50,14 @@ const ProductDetails = styled.div`
 const ProductTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
-  margin-bottom: 16px;
+  padding-top: 10px;
+  margin-bottom: 10px;
 `
 
 const ProductPrice = styled.h5`
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
 `
 
 export default function Checkout() {
@@ -86,7 +87,7 @@ export default function Checkout() {
           <ProductTitle>MVP Application Architect and Build</ProductTitle>
           <ProductPrice>$5000.00</ProductPrice>
           <p>
-            <b>this is a test purchase</b>e
+            <b>this is a test purchase</b>
           </p>
         </ProductDetails>
       </ProductContainer>
