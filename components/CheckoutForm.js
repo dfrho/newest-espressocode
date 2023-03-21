@@ -102,7 +102,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // TODO: Make sure to change this to your payment completion page
-        return_url: 'https://espressocode.tech',
+        return_url: 'https://espressocode.tech/success',
       },
     })
 
