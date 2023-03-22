@@ -18,8 +18,7 @@ const CheckoutContainer = styled.section`
     grid-template-columns: 1fr;
     padding: 12px;
   }
-  // Assign the grid areas to a child element
-  & > div.test-button-container {
+  & > div.test-button {
     grid-area: test-button;
     width: 100%;
   }
