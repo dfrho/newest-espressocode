@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Payment from '../components/Payment'
 import copyLightIcon from '../public/static/icons/copylight.svg'
 import { PageSEO } from '../components/SEO'
+import { useTheme } from 'next-themes'
 
 const CheckoutContainer = styled.section`
   display: grid;
@@ -111,11 +112,17 @@ const CopyButton = styled.button`
   }
 `
 
-//make a styled component for text that is centered in mobile view but flush left in desktop view
-const CopyButtonText = styled.p`
+const CopyButtonTextDark = styled.p`
   font-size: 14px;
   font-weight: 400;
   color: #fff;
+  text-align: center;
+  margin-top: 8px;
+`
+const CopyButtonTextLight = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
   text-align: center;
   margin-top: 8px;
 `
@@ -131,6 +138,18 @@ export default function Checkout() {
   const [message, setMessage] = useState('')
   const [copied, setCopied] = useState(false)
   const [showCopyButton, setShowCopyButton] = useState(true)
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    function getThemeFromStorage() {
+      const storageKey = 'theme'
+      const theme = localStorage.getItem(storageKey)
+      return theme ? theme : null
+    }
+
+    const theme = getThemeFromStorage()
+    setTheme(theme)
+  })
 
   const handleCopyClick = (event) => {
     event.preventDefault()
@@ -179,7 +198,11 @@ export default function Checkout() {
                     {copied ? 'Copied! Use any Exp/CVC' : 'Copy Test CC Number'}
                   </CopyButtonDiv>
                 </CopyButton>
-                <CopyButtonText>(this is a test purchase)</CopyButtonText>
+                {theme === 'dark' ? (
+                  <CopyButtonTextDark>(this is a test purchase)</CopyButtonTextDark>
+                ) : (
+                  <CopyButtonTextLight>(this is a test purchase)</CopyButtonTextLight>
+                )}
               </div>
             </TestButtonContainer>
           )}
