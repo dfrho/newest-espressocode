@@ -22,7 +22,7 @@ The cornerstone of the application was the `WeatherTable` function, a React func
 
 Two serverless functions - `getWeatherData` and `getAdvice` - powered the application. `getWeatherData` fetched weather data based on the user's IP address, while `getAdvice` used the OpenAI API to generate advice based on the fetched weather data. Both of these functions were deployed as serverless functions.
 
-In the `getAdvice` function, we leveraged OpenAI's GPT-3 model to generate a piece of advice. The code block is as follows:
+In the `getAdvice` function, we leveraged OpenAI's GPT-3 model to generate a piece of advice; when it arrives a pulsating border appears around the weather icon for clicking, which opens a modal with the packing advice. The code block is as follows:
 
 ```javascript
 async function handler(req, res) {
