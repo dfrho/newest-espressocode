@@ -22,7 +22,7 @@ The cornerstone of the application was the `WeatherTable` function, a React func
 
 Two serverless functions - `getWeatherData` and `getAdvice` - powered the application. `getWeatherData` fetched weather data based on the user's IP address, while `getAdvice` used the OpenAI API to generate advice based on the fetched weather data. Both of these functions were deployed as serverless functions.
 
-In the `getAdvice` function, we leveraged OpenAI's GPT-3 model to generate a piece of advice. The code block is as follows:
+In the `getAdvice` function, we leveraged OpenAI's GPT-3 model to generate a piece of advice; when it arrives a pulsating border appears around the weather icon for clicking, which opens a modal with the packing advice. The code block is as follows:
 
 ```javascript
 async function handler(req, res) {
@@ -66,4 +66,4 @@ Here's how the API call is constructed to work. The prompt is designed to provid
 
 Once the advice is generated, it is sent back to the front-end of the application and displayed to the user. If an error occurs during the process, the function will return a 500 status code along with an error message.
 
-By using the MACH architecture and leveraging the power of OpenAI, this project successfully delivered a dynamic, contextually aware weather advice application. The serverless approach provided scalability and cost-effectiveness, while the use of Next.js and React offered a rich, responsive user interface. This project stands as a testament to the endless possibilities of modern web development and the potential of AI in enhancing user experiences.
+By using the MACH architecture and leveraging the power of OpenAI, we can deliver a dynamic, contextually aware weather advice application. The serverless approach provided scalability and cost-effectiveness, while the use of Next.js and React offered responsive user interface.
