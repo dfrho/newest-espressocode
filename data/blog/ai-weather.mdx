@@ -1,0 +1,69 @@
+---
+title: Embracing MACH Architecture and OpenAI to Build a Weather Advice Application
+date: '2023-05-16'
+summary: 'Weather plus advice application built with Next.js, OpenAI, and serverless functions'
+tags: [learning, engineering, AI, MACH, serverless, Next.js, React, OpenAI]
+images: ['/static/images/weather.webp']
+---
+
+![and breath in neon over wall of plants](/static/images/weather.webp)
+
+The world of modern web development is filled with fascinating possibilities and challenges. One such opportunity came recently in the form of creating a unique application using the MACH (Microservices, API-first, Cloud-native, and Headless) architecture. The goal was to construct a dynamic and responsive web application that delivers real-time weather updates and generates contextually relevant advice based on the current weather conditions.
+
+## Understanding the Task
+
+The application needed to fetch real-time weather data based on the user's IP address and then use OpenAI to generate suitable advice depending on the weather conditions. The project was built using Next.js, a React-based framework, and deployed as a serverless function.
+
+### Building the Weather Application
+
+The cornerstone of the application was the `WeatherTable` function, a React functional component. This function used the `useState` and `useEffect` hooks to fetch data from the serverless functions and display them in the front-end. The application made use of Axios for making HTTP requests and the React Tooltip library for enhancing user experience.
+
+### Serverless Functions
+
+Two serverless functions - `getWeatherData` and `getAdvice` - powered the application. `getWeatherData` fetched weather data based on the user's IP address, while `getAdvice` used the OpenAI API to generate advice based on the fetched weather data. Both of these functions were deployed as serverless functions.
+
+In the `getAdvice` function, we leveraged OpenAI's GPT-3 model to generate a piece of advice. The code block is as follows:
+
+```javascript
+async function handler(req, res) {
+  const { weatherData } = req.body
+
+  if (weatherData) {
+    const prompt = `In the voice of Willard Scott without saying so, and presence based on current time as ${weatherData.location.localtime} and based on current weather described as ${weatherData.current.condition.text} and weather conditions consisting of Cloud Coverage is ${weatherData.current.cloud}% and Temperature is ${weatherData.current.temp_f}F and Humidity is ${weatherData.current.humidity}% and Precipitation for the day is ${weatherData.current.precip_in} inches and Current Wind Speed is ${weatherData.current.wind_mph} mph and Winds are Gusting at ${weatherData.current.gust_mph} mph, any advice on what I should pack when going outside, as in outerwear, and/or an umbrella? Limit 140 characters.`
+    try {
+      const { data } = await openai.createCompletion({
+        model: 'text-davinci-003',
+        prompt,
+        temperature: 0.7, // Adjust based on desired randomness vs. coherence
+        max_tokens: 100, // Adjust based on desired response length
+        top_p: 1,
+        frequency_penalty: 0.2, // Fine-tune to control repetitiveness
+        presence_penalty: 0.6, // Fine-tune to encourage relevant responses
+        stop: '\\n',
+      })
+      const advice = data.choices[0].text.trim()
+      res.status(200).json({ advice })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'An error occurred while fetching advice' })
+    }
+  } else {
+    res.status(400).json({ message: 'Invalid request data' })
+  }
+}
+```
+
+Here's how the API call is constructed to work. The prompt is designed to provide specific context to the AI, including current weather details, and asks it to generate advice on what to pack when going outside. The parameters of the `openai.createCompletion` function are defined as follows:
+
+- `model: 'text-davinci-003'`: Specifies the model used for generating the advice. In this case, we are using GPT-3's 'text-davinci-003' model.
+- `prompt`: The input string that will be used as a base for generating the AI's response.
+- `temperature: 0.7`: Controls the randomness of the AI's responses. A higher value will yield more random outputs, while a lower value results in more deterministic outputs.
+- `max_tokens: 100`: Limits the length of the generated output to 100 tokens.
+- `top_p: 1`: Used for nucleus sampling, a method of random sampling which selects the next word in the generated text from a restricted pool of promising candidates, instead of the entire distribution.
+- `frequency_penalty: 0.2`: Adjusts the likelihood of the AI generating frequent vs. rare phrases.
+- `presence_penalty: 0.6`: Adjusts the likelihood of the AI generating context-relevant vs. context-irrelevant responses.
+- `stop: '\\n'`: Instructs the AI to end the text generation when it encounters a newline character.
+
+Once the advice is generated, it is sent back to the front-end of the application and displayed to the user. If an error occurs during the process, the function will return a 500 status code along with an error message.
+
+By using the MACH architecture and leveraging the power of OpenAI, this project successfully delivered a dynamic, contextually aware weather advice application. The serverless approach provided scalability and cost-effectiveness, while the use of Next.js and React offered a rich, responsive user interface. This project stands as a testament to the endless possibilities of modern web development and the potential of AI in enhancing user experiences.
