@@ -1,28 +1,28 @@
 ---
-title: Embracing MACH Architecture and OpenAI to Build a Weather Advice Application
+title: Building a Weather Advice Microservice with Next.js and OpenAI
 date: '2023-05-16'
-summary: 'Weather plus advice application built with Next.js, OpenAI, and serverless functions'
-tags: [learning, engineering, AI, MACH, serverless, Next.js, React, OpenAI]
+summary: 'Create a microservice with real-time weather updates and contextually relevant advice using Next.js and OpenAI'
+tags: [learning, engineering, AI, serverless, Next.js, React, OpenAI]
 images: ['/static/images/weather.webp']
 ---
 
-![and breath in neon over wall of plants](/static/images/weather.webp)
+![weather shot](/static/images/weather.webp)
 
-The world of modern web development is filled with fascinating possibilities and challenges. One such opportunity came recently in the form of creating a unique application using the MACH (Microservices, API-first, Cloud-native, and Headless) architecture. The goal was to construct a dynamic and [responsive web application](https://weather-packing-advice.vercel.app/) that delivers real-time weather updates and generates contextually relevant advice based on the current weather conditions.
+In the world of modern web development, there are numerous exciting opportunities and challenges. One such endeavor is the creation of a unique microservice that provides real-time weather updates and generates contextually relevant advice based on the current weather conditions. This project utilizes Next.js, a React-based framework, and the powerful capabilities of OpenAI.
 
 ## Understanding the Task
 
-The application needed to fetch real-time weather data based on the user's IP address and then use OpenAI to generate suitable advice depending on the weather conditions. The project was built using Next.js, a React-based framework, and deployed as a serverless function.
+The goal of this microservice is to fetch real-time weather data based on the user's IP address and generate suitable advice using OpenAI. By combining Next.js, serverless functions, and OpenAI, we can create a dynamic and responsive web application.
 
-### Building the Weather Application
+### Building the Weather Microservice
 
-The cornerstone of the application was the `WeatherTable` function, a React functional component. This function used the `useState` and `useEffect` hooks to fetch data from the serverless functions and display them in the front-end. The application made use of Axios for making HTTP requests and the React Tooltip library for enhancing user experience.
+The cornerstone of the microservice is the implementation of a `WeatherTable` function, which is a React functional component. This function utilizes the `useState` and `useEffect` hooks to fetch data from serverless functions and display it in the front-end. The microservice also incorporates Axios for making HTTP requests and the React Tooltip library to enhance the user experience.
 
 ### Serverless Functions
 
-Two serverless functions - `getWeatherData` and `getAdvice` - powered the application. `getWeatherData` fetched weather data based on the user's IP address, while `getAdvice` used the OpenAI API to generate advice based on the fetched weather data. Both of these functions were deployed as serverless functions.
+Two serverless functions power the microservice: `getWeatherData` and `getAdvice`. The `getWeatherData` function fetches weather data based on the user's IP address, while the `getAdvice` function leverages the OpenAI API to generate advice based on the weather data. Both functions are deployed as serverless functions.
 
-In the `getAdvice` function, we leveraged OpenAI's GPT-3 model to generate a piece of advice; when it arrives a pulsating border appears around the weather icon for clicking, which opens a modal with the packing advice. The code block is as follows:
+Here is an example of the `getAdvice` function:
 
 ```javascript
 async function handler(req, res) {
