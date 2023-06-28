@@ -6,6 +6,8 @@ import Head from 'next/head'
 
 import Analytics from '@/components/analytics'
 import LayoutWrapper from '@/components/LayoutWrapper'
+import client from 'config/client'
+import { ApolloProvider } from '@apollo/client'
 
 export default function App({ Component, pageProps }) {
   return (
@@ -15,7 +17,9 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Analytics />
       <LayoutWrapper>
-        <Component {...pageProps} />
+        <ApolloProvider client={client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
       </LayoutWrapper>
     </ThemeProvider>
   )

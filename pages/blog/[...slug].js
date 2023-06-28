@@ -3,6 +3,8 @@ import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+import { Posts, SinglePost } from 'config/queries'
+import client from 'config/client'
 
 const DEFAULT_LAYOUT = 'PostLayout'
 
@@ -19,6 +21,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  const slug = params.slug[0]
+  const { data } = await client.query({
+    query: SinglePost,
+  })
+  const AllPosts = data
+  console.log('🚀 ~ file: [...slug].js:32 ~ getStaticProps ~ AllPosts:', AllPosts)
+
   const allPosts = await getAllFilesFrontMatter('blog')
   const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
   const prev = allPosts[postIndex + 1] || null

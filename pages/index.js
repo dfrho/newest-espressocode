@@ -6,16 +6,20 @@ import { getAllFilesFrontMatter } from '@/lib/mdx'
 import formatDate from '@/lib/utils/formatDate'
 
 import NewsletterForm from '@/components/NewsletterForm'
+import client from 'config/client'
+import { Posts } from 'config/queries'
 
 const MAX_DISPLAY = 5
 
 export async function getStaticProps() {
   const posts = await getAllFilesFrontMatter('blog')
-
-  return { props: { posts } }
+  const { data } = await client.query({
+    query: Posts,
+  })
+  return { props: { posts, data } }
 }
 
-export default function Home({ posts }) {
+export default function Home({ posts, data }) {
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
@@ -29,9 +33,9 @@ export default function Home({ posts }) {
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!posts.length && 'No posts found.'}
-          {posts.slice(0, MAX_DISPLAY).map((frontMatter) => {
-            const { slug, date, title, summary, tags } = frontMatter
+          {!data?.posts.length && 'No posts found.'}
+          {data?.posts?.slice(0, MAX_DISPLAY).map((frontMatter) => {
+            const { slug, date, title, summary, tag } = frontMatter
             return (
               <li key={slug} className="py-12">
                 <article>
@@ -54,7 +58,7 @@ export default function Home({ posts }) {
                             </Link>
                           </h2>
                           <div className="flex flex-wrap">
-                            {tags.map((tag) => (
+                            {tag.map((tag) => (
                               <Tag key={tag} text={tag} />
                             ))}
                           </div>
