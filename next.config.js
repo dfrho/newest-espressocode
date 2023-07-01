@@ -39,4 +39,7 @@ module.exports = withBundleAnalyzer({
 
     return config
   },
+  images: {
+    domains: ['media.graphassets.com'],
+  },
 })

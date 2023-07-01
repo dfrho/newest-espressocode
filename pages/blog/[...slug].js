@@ -1,19 +1,16 @@
-import fs from 'fs'
-import PageTitle from '@/components/PageTitle'
-import generateRss from '@/lib/generate-rss'
-import { MDXLayoutRenderer } from '@/components/MDXComponents'
-import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
-import { Posts, SinglePost } from 'config/queries'
+import { GetAllPosts } from 'config/queries'
 import client from 'config/client'
-
-const DEFAULT_LAYOUT = 'PostLayout'
+import PostLayout from '@/layouts/PostLayout'
 
 export async function getStaticPaths() {
-  const posts = getFiles('blog')
+  const { data } = await client.query({
+    query: GetAllPosts,
+  })
+  const APosts = data.posts
   return {
-    paths: posts.map((p) => ({
+    paths: APosts.map((p) => ({
       params: {
-        slug: formatSlug(p).split('/'),
+        slug: p.slug?.split('/'),
       },
     })),
     fallback: false,
@@ -23,55 +20,18 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const slug = params.slug[0]
   const { data } = await client.query({
-    query: SinglePost,
+    query: GetAllPosts,
   })
-  const AllPosts = data
-  console.log('🚀 ~ file: [...slug].js:32 ~ getStaticProps ~ AllPosts:', AllPosts)
+  const APosts = data.posts
 
-  const allPosts = await getAllFilesFrontMatter('blog')
-  const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
-  const prev = allPosts[postIndex + 1] || null
-  const next = allPosts[postIndex - 1] || null
-  const post = await getFileBySlug('blog', params.slug.join('/'))
-  const authorList = post.frontMatter.authors || ['default']
-  const authorPromise = authorList.map(async (author) => {
-    const authorResults = await getFileBySlug('authors', [author])
-    return authorResults.frontMatter
-  })
-  const authorDetails = await Promise.all(authorPromise)
-
-  // rss
-  const rss = generateRss(allPosts)
-  fs.writeFileSync('./public/feed.xml', rss)
-
-  return { props: { post, authorDetails, prev, next } }
+  const postIndex = APosts.findIndex((post) => post.slug === params.slug.join('/'))
+  const prev = APosts[postIndex + 1] || null
+  const next = APosts[postIndex - 1] || null
+  // filter post by slug
+  const singlePost = APosts.find((item) => item.slug === slug)
+  return { props: { prev, next, singlePost } }
 }
 
-export default function Blog({ post, authorDetails, prev, next }) {
-  const { mdxSource, toc, frontMatter } = post
-
-  return (
-    <>
-      {frontMatter.draft !== true ? (
-        <MDXLayoutRenderer
-          layout={frontMatter.layout || DEFAULT_LAYOUT}
-          toc={toc}
-          mdxSource={mdxSource}
-          frontMatter={frontMatter}
-          authorDetails={authorDetails}
-          prev={prev}
-          next={next}
-        />
-      ) : (
-        <div className="mt-24 text-center">
-          <PageTitle>
-            Under Construction{' '}
-            <span role="img" aria-label="roadwork sign">
-              🚧
-            </span>
-          </PageTitle>
-        </div>
-      )}
-    </>
-  )
+export default function Blog({ prev, next, singlePost }) {
+  return <PostLayout frontMatter={singlePost} prev={prev} next={next} />
 }

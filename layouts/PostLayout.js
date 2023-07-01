@@ -16,8 +16,9 @@ import siteMetadata from '@/data/siteMetadata'
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
-  const { slug, fileName, date, title, tags } = frontMatter
+export default function PostLayout({ frontMatter, authorDetails, next, prev }) {
+  console.log('🚀 ~ file: PostLayout.js:20 ~ PostLayout ~ frontMatter:', frontMatter)
+  const { slug, date, title, tag, author, content, coverImage } = frontMatter
 
   return (
     <SectionContainer>
@@ -54,39 +55,39 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
               <dt className="sr-only">Authors</dt>
               <dd>
                 <ul className="flex justify-center space-x-8 xl:block sm:space-x-12 xl:space-x-0 xl:space-y-8">
-                  {authorDetails.map((author) => (
-                    <li className="flex items-center space-x-2" key={author.name}>
-                      {author.avatar && (
-                        <Image
-                          src={author.avatar}
-                          width="38px"
-                          height="38px"
-                          alt="avatar"
-                          className="w-10 h-10 rounded-full"
-                        />
-                      )}
-                      <dl className="text-sm font-medium leading-5 whitespace-nowrap">
-                        <dt className="sr-only">Name</dt>
-                        <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
-                        <dt className="sr-only">Twitter</dt>
-                        <dd>
-                          {author.twitter && (
-                            <Link
-                              href={author.twitter}
-                              className="text-primary-800 dark:text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                            >
-                              {author.twitter.replace('https://twitter.com/', '@')}
-                            </Link>
-                          )}
-                        </dd>
-                      </dl>
-                    </li>
-                  ))}
+                  <li className="flex items-center space-x-2" key={author?.name}>
+                    <img
+                      src={author?.picture?.url}
+                      width="38px"
+                      height="38px"
+                      alt="avatar"
+                      className="w-10 h-10 rounded-full"
+                    />
+
+                    <dl className="text-sm font-medium leading-5 whitespace-nowrap">
+                      <dt className="sr-only">Name</dt>
+                      <dd className="text-gray-900 dark:text-gray-100">{author?.name}</dd>
+                      <dt className="sr-only">Twitter</dt>
+                      <dd>
+                        {author?.twitter && (
+                          <Link
+                            href={author?.twitter}
+                            className="text-primary-800 dark:text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          >
+                            {author?.twitter.replace('https://twitter.com/', '@')}
+                          </Link>
+                        )}
+                      </dd>
+                    </dl>
+                  </li>
                 </ul>
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:pb-0 xl:col-span-3 xl:row-span-2">
-              <div className="pt-10 pb-8 prose dark:prose-dark max-w-none">{children}</div>
+              <div className="pt-10 pb-8 prose dark:prose-dark max-w-none">
+                <img src={coverImage.url} alt={title} />
+                <div dangerouslySetInnerHTML={{ __html: content.html }} />
+              </div>
               {/* <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={discussUrl(slug)} rel="nofollow">
                   {'Discuss on Twitter'}
@@ -98,13 +99,13 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
             </div>
             <footer>
               <div className="text-sm font-medium leading-5 divide-gray-200 xl:divide-y dark:divide-gray-700 xl:col-start-1 xl:row-start-2">
-                {tags && (
+                {tag && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                       Tags
                     </h2>
                     <div className="flex flex-wrap">
-                      {tags.map((tag) => (
+                      {tag.map((tag) => (
                         <Tag key={tag} text={tag} />
                       ))}
                     </div>

@@ -2,17 +2,38 @@ import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
-import { getAllTags } from '@/lib/tags'
-import kebabCase from '@/lib/utils/kebabCase'
+import client from 'config/client'
+import { Posts } from 'config/queries'
 
 export async function getStaticProps() {
-  const tags = await getAllTags('blog')
+  const { data } = await client.query({
+    query: Posts,
+  })
+  const AllPosts = data.posts
 
-  return { props: { tags } }
+  return { props: { AllPosts } }
 }
 
-export default function Tags({ tags }) {
-  const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a])
+export default function Tags({ AllPosts }) {
+  const tagCounts = {}
+  // Iterate over each data item
+  AllPosts.forEach((item) => {
+    // Iterate over each tag in the item
+    item.tag.forEach((tag) => {
+      // Check if the tag name already exists in tagCounts
+      if (Object.prototype.hasOwnProperty.call(tagCounts, tag.name)) {
+        // Increment the count if the tag name already exists
+        tagCounts[tag.name].count++
+      } else {
+        // Initialize the count to 1 if the tag name doesn't exist
+        tagCounts[tag.name] = {
+          count: 1,
+          slug: tag.slug,
+        }
+      }
+    })
+  })
+
   return (
     <>
       <PageSEO title={`Tags - ${siteMetadata.author}`} description="Things I blog about" />
@@ -23,20 +44,17 @@ export default function Tags({ tags }) {
           </h1>
         </div>
         <div className="flex flex-wrap max-w-lg">
-          {Object.keys(tags).length === 0 && 'No tags found.'}
-          {sortedTags.map((t) => {
-            return (
-              <div key={t} className="mt-2 mb-2 mr-5">
-                <Tag text={t} />
-                <Link
-                  href={`/tags/${kebabCase(t)}`}
-                  className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300"
-                >
-                  {` (${tags[t]})`}
-                </Link>
-              </div>
-            )
-          })}
+          {Object.entries(tagCounts).map(([tagName, { count, slug }]) => (
+            <div key={slug} className="mt-2 mb-2 mr-5">
+              <Tag text={slug} />
+              <Link
+                href={`/tags/${slug}`}
+                className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300"
+              >
+                {tagName} {` (${count})`}
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </>

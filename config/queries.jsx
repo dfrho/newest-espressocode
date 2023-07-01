@@ -14,9 +14,9 @@ export const Posts = gql`
     }
   }
 `
-export const SinglePost = gql`
-  query SinglePost {
-    post(where: { slug: "cross-functional-collaboration-as-a-solutions-sales-engineer" }) {
+export const GetAllPosts = gql`
+  query AllPosts {
+    posts {
       title
       id
       slug
@@ -50,10 +50,11 @@ export const SinglePost = gql`
   }
 `
 
-export const SinglePost2 = gql`
-  query SinglePost {
-    post(where: { slug: "cross-functional-collaboration-as-a-solutions-sales-engineer" }) {
-      title
+export const GetAllTags = gql`
+  query tags {
+    tag {
+      name
+      slug
     }
   }
 `

@@ -1,14 +1,20 @@
 import { PageSEO } from '@/components/SEO'
 import siteMetadata from '@/data/siteMetadata'
-import { getAllFilesFrontMatter } from '@/lib/mdx'
+// import { getAllFilesFrontMatter } from '@/lib/mdx'
 import ListLayout from '@/layouts/ListLayout'
 import { POSTS_PER_PAGE } from '../../blog'
 import client from 'config/client'
 import { Posts } from 'config/queries'
 
 export async function getStaticPaths() {
-  const totalPosts = await getAllFilesFrontMatter('blog')
-  const totalPages = Math.ceil(totalPosts.length / POSTS_PER_PAGE)
+  // const totalPosts = await getAllFilesFrontMatter('blog')
+
+  const { data } = await client.query({
+    query: Posts,
+  })
+  const posts = data.posts
+
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
   const paths = Array.from({ length: totalPages }, (_, i) => ({
     params: { page: (i + 1).toString() },
   }))

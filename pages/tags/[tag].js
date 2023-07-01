@@ -3,10 +3,10 @@ import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
 import generateRss from '@/lib/generate-rss'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
-import { getAllTags } from '@/lib/tags'
+// import { getAllTags } from '@/lib/tags'
 import kebabCase from '@/lib/utils/kebabCase'
 import client from 'config/client'
-import { Posts } from 'config/queries'
+import { GetAllTags, Posts } from 'config/queries'
 import fs from 'fs'
 import { useRouter } from 'next/router'
 import path from 'path'
@@ -14,12 +14,14 @@ import path from 'path'
 const root = process.cwd()
 
 export async function getStaticPaths() {
-  const tags = await getAllTags('blog')
-
+  const { data } = await client.query({
+    query: GetAllTags,
+  })
+  const allTags = data.tag
   return {
-    paths: Object.keys(tags).map((tag) => ({
+    paths: allTags.map((tag) => ({
       params: {
-        tag,
+        tag: tag.slug,
       },
     })),
     fallback: false,
