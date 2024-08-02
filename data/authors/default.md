@@ -1,8 +1,8 @@
 ---
 name: David Rhodes
 avatar: /static/images/avatarnew.png
-occupation: Senior Sales Engineer
-company: FullStory
+occupation: Senior Solutions Engineer
+company: Fullstory
 # email: david@espressocode.tech
 # twitter: https://twitter.com/rhodesdav
 # linkedin: https://www.linkedin.com/in/rhodesdavid/
