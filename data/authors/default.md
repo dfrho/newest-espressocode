@@ -1,6 +1,6 @@
 ---
 name: David Rhodes
-avatar: /static/images/avatar-three.JPG
+avatar: /static/images/avatarnew.png
 occupation: Senior Sales Engineer
 company: FullStory
 # email: david@espressocode.tech
@@ -9,4 +9,4 @@ company: FullStory
 # github: https://github.com/dfrho
 ---
 
-David Rhodes is a sales engineer with backgrounds in SaaS sales and enterprise frontend engineering. Always curious about new tech, he's eager to build anything in JavaScript.
+David Rhodes is a sales/solutions engineer with backgrounds in SaaS sales and enterprise frontend engineering. Always curious about new tech, he's eager to build anything in JavaScript.
