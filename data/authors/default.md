@@ -9,4 +9,4 @@ company: FullStory
 # github: https://github.com/dfrho
 ---
 
-David Rhodes is a sales/solutions engineer with backgrounds in SaaS sales and enterprise frontend engineering. Always curious about new tech, he's eager to build anything in JavaScript.
+David Rhodes is a sales/solutions engineer with backgrounds in SaaS sales and enterprise software engineering. Always curious about new tech, he's eager to build in Python or JavaScript.
