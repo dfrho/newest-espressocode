@@ -1,12 +1,20 @@
 ---
 name: David Rhodes
 avatar: /static/images/avatarnew.png
-occupation: Senior Solutions Engineer
-company: Fullstory
+occupation: Technical Sales, Senior Solutions Engineer
+company: ex-Fullstory
 # email: david@espressocode.tech
 # twitter: https://twitter.com/rhodesdav
 # linkedin: https://www.linkedin.com/in/rhodesdavid/
 # github: https://github.com/dfrho
 ---
 
-David Rhodes is a sales/solutions engineer with backgrounds in SaaS sales and enterprise software engineering. Always curious about new tech, he's eager to build anything in Python, Node or JavaScript.
+# I believe your success is directly proportional to the amount of times you can say: "I can figure this out."
+
+Results-driven solutions engineer with 10+ years experience leading successful software sales, solution design, and software engineering engagements.
+
+Driven to deliver innovative technology, fueled by continuous learning and collaboration.
+
+Rare trifecta for rapid technical sales: business acumen, technical understanding, empathy.
+
+Left Fullstory to level up my technical skills and work on a few projects while exploring a new role.
